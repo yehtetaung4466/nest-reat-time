@@ -7,6 +7,7 @@ import { DrizzleModule } from './drizzle/drizzle.module';
 import { UserModule } from './user/user.module';
 import { GroupModule } from './group/group.module';
 import { MemberModule } from './member/member.module';
+import { GroupMessageService } from './group-message/group-message.service';
 
 @Module({
   imports: [
@@ -19,5 +20,6 @@ import { MemberModule } from './member/member.module';
     GroupModule,
     MemberModule,
   ],
+  providers: [GroupMessageService],
 })
 export class AppModule {}

@@ -6,6 +6,8 @@ import { AuthService } from './auth.service';
 import { JwtService } from './jwt.service';
 import { JwtRefreshStrategy } from './strategies/jwt.refresh.strategy';
 import { WsJwtStrategy } from './strategies/jwt.ws.strategy';
+import { ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [DrizzleModule],

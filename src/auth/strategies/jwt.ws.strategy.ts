@@ -13,11 +13,6 @@ export class WsJwtStrategy extends PassportStrategy(Strategy, 'jwt-ws') {
       secretOrKey: config.get('JWT_ACCESS_TOKEN_SECRET'),
     });
   }
-  async authenticate(req: any) {
-    // console.log(req);
-    super.authenticate(req);
-    // super.authenticate()
-  }
   async validate(payload: JwtPayload) {
     if (payload.type !== 'access') throw new WsException('un authorized');
     return payload;

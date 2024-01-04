@@ -38,6 +38,7 @@ export const members = pgTable(
 
 export const gp_messages = pgTable('gp_messages', {
   id: serial('id').primaryKey(),
+  message: varchar('message', { length: 256 }).notNull(),
   group_id: serial('group_id')
     .notNull()
     .references(() => groups.id),

@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Get,
   Param,
   ParseIntPipe,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -34,5 +36,15 @@ export class GroupController {
   ) {
     const user = req.user as JwtPayload;
     return this.memberService.createMember(groupId, user.sub);
+  }
+
+  @Get(':groupId/members')
+  getMemberOfGroup(@Param('groupId', ParseIntPipe) groupId: number) {
+    return this.memberService.getMemberByGroupId(groupId);
+  }
+
+  @Get()
+  getAllGroups(@Query('name') name: string) {
+    return this.groupService.retrieveAllGroups(name);
   }
 }

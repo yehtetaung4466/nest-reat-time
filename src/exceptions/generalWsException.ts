@@ -3,18 +3,22 @@ import {
   WsExceptionFilter,
   ArgumentsHost,
   UnauthorizedException,
+  HttpException,
 } from '@nestjs/common';
 import { WsException } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
 
-@Catch(WsException)
+@Catch()
 export class GeneralWsException implements WsExceptionFilter {
-  catch(exception: WsException, host: ArgumentsHost) {
+  catch(exception: WsException | HttpException | Error, host: ArgumentsHost) {
     const ctx = host.switchToWs();
     const client = ctx.getClient() as Socket;
-    // throw new WsException('error');
-    console.log(exception);
-    console.log('handled by wsException');
-    client.emit('error', exception.message);
+    if (exception instanceof HttpException) {
+      client.emit('error', exception.getResponse());
+    } else if (exception instanceof WsException) {
+      client.emit('error', exception.message);
+    } else {
+      client.emit('error', exception.message || 'internal server error');
+    }
   }
 }

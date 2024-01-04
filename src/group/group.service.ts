@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { and, eq, ilike, like } from 'drizzle-orm';
 import { PostgresError } from 'postgres';
 import { DrizzleService } from 'src/drizzle/drizzle.service';
 import { groups, members } from 'src/drizzle/schema';
@@ -26,4 +27,21 @@ export class GroupService {
 
     return { msg: 'successfully created a group' };
   }
+  async retrieveAllGroups(name?: string) {
+    if (name) {
+      return await this.drizzleService.db
+        .select()
+        .from(groups)
+        .where(ilike(groups.name, `%${name}%`));
+    } else {
+      return await this.drizzleService.db.select().from(groups);
+    }
+  }
+
+  // async checkIfgroupExit(groupId: number) {
+  //   return !!(await this.drizzleService.db.query.groups.findFirst({
+  //     where: eq(groups.id, groupId),
+  //   }));
+  // }
 }
+
