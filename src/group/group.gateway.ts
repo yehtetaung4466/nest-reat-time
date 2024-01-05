@@ -70,7 +70,7 @@ export class GroupGateway {
       this.server.to(joinedRoom).emit('groupMessages', groupMessages);
       return 'joined ' + joinedRoom;
     } else {
-      throw new WsException('error at joining room');
+      throw new WsException('invalid room or have not access to room');
     }
   }
 }

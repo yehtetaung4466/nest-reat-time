@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -46,5 +47,14 @@ export class GroupController {
   @Get()
   getAllGroups(@Query('name') name: string) {
     return this.groupService.retrieveAllGroups(name);
+  }
+  @UseGuards(JwtAuthGuard)
+  @Delete(':groupId')
+  deleteOneGroup(
+    @Param('groupId', ParseIntPipe) groupId: number,
+    @Req() req: Request,
+  ) {
+    const user = req.user as JwtPayload;
+    return this.groupService.deleteGroupById(user.sub, groupId);
   }
 }

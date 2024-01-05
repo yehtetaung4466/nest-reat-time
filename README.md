@@ -25,6 +25,7 @@ This is the nest.js back-end group chat project.
     - get `/users/:id` to get specific user
     - post `/groups` to make new group
     - get `/groups?name=xxx` to get all group with optional query param name
+    - delete `/groups/:groupId` to delete a group
     - get,post `groups/:groupId/members` to get members of group or join group
   - ##### Web Socket Events
     - ###### Client listens

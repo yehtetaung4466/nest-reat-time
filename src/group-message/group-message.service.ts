@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
+import { PostgresError } from 'postgres';
 import { DrizzleService } from 'src/drizzle/drizzle.service';
 import { gp_messages } from 'src/drizzle/schema';
 
@@ -20,7 +21,14 @@ export class GroupMessageService {
     const newMessage = await this.drizzleService.db
       .insert(gp_messages)
       .values({ group_id: groupId, sender_id: senderId, message })
-      .returning();
+      .returning()
+      .catch((e) => {
+        if (e instanceof PostgresError) {
+          if ((e.constraint_name = 'gp_messages_group_id_groups_id_fk')) {
+            throw new BadRequestException('invalid group');
+          }
+        }
+      });
     return newMessage[0];
   }
 }
