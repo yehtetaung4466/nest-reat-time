@@ -9,9 +9,9 @@ This is the nest.js back-end group chat project.
    - DB_URL(postgres)
    - JWT_ACCESS_TOKEN_SECRET
    - JWT_REFRESH_TOKEN_SECRET
-  - run `pnpm install`
-  - run `pnpm push` to load the postgresql
-  - run `pnpm start:dev`
+   - run `pnpm install`
+   - run `pnpm push` to load the postgresql
+   - run `pnpm start:dev`
 
 #### Optionally
 - run `pnpm studio` to access drizzle studio
